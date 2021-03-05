@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch Darkly Feature Wrapper Demo</title>
+    <script src="https://unpkg.com/launchdarkly-js-client-sdk@2"></script>
+</head>
+<body>
+    <div>Launch Darkly</div>
+    <script src="app.js"></script>
+    <script>
+        var user = {
+          firstName: 'Darth',
+          lastName: 'Vader',
+          key: 'Dark Side',
+          custom: {
+            groups: 'siths'
+          }
+        };
+
+        var div = document.createElement('div');
+        document.body.appendChild(div);
+
+        div.appendChild(document.createTextNode('Initializing...'));
+
+        var ldclient = LDClient.initialize('603b1f5b04ec6610a35ff085', user);
+
+        function render() {
+          var shouldShow = ldclient.variation('lights-out', true);
+          const imageToDisplay = document.createElement('img');
+          div.replaceChild(imageToDisplay, div.firstChild);
+          imageToDisplay.src = shouldShow ? 'https://bgr.com/wp-content/uploads/2015/08/darth-vader.jpg?quality=70&strip=all' : 'https://cdn3.movieweb.com/i/article/mSv9XmO6EQbtijy72VJ4BMEzrbveks/1200:100/The-Mandalorian-Blue-Cookies-Recipe-Grogu-Baby-Yoda.jpg';
+        }
+
+        ldclient.on('ready', render);
+        ldclient.on('change', render);
+      </script>
+</body>
+</html>
