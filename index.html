@@ -20,15 +20,24 @@
           }
         };
 
+        var user2 = {
+          firstName: 'Grogu',
+          lastName: 'Baby',
+          key: 'Baby Yoda',
+          custom: {
+            groups: 'jedis'
+          }
+        };
+
         var div = document.createElement('div');
         document.body.appendChild(div);
 
         div.appendChild(document.createTextNode('Initializing...'));
 
-        var ldclient = LDClient.initialize('603b1f5b04ec6610a35ff085', user);
+        var ldclient = LDClient.initialize('603b1f5b04ec6610a35ff085', user2);
 
         function render() {
-          var shouldShow = ldclient.variation('lights-out', true);
+          var shouldShow = ldclient.variation('lights-off', false);
           const imageToDisplay = document.createElement('img');
           div.replaceChild(imageToDisplay, div.firstChild);
           imageToDisplay.src = shouldShow ? 'https://bgr.com/wp-content/uploads/2015/08/darth-vader.jpg?quality=70&strip=all' : 'https://cdn3.movieweb.com/i/article/mSv9XmO6EQbtijy72VJ4BMEzrbveks/1200:100/The-Mandalorian-Blue-Cookies-Recipe-Grogu-Baby-Yoda.jpg';
