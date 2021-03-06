@@ -1,50 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Launch Darkly Feature Wrapper Demo</title>
+  <head>
+    <meta charset="utf-8">
+    <title>LaunchDarkly tutorial</title>
     <script src="https://unpkg.com/launchdarkly-js-client-sdk@2"></script>
-</head>
-<body>
-    <div>Launch Darkly</div>
-    <script src="app.js"></script>
+  </head>
+  <body>
     <script>
-        var user = {
-          firstName: 'Darth',
-          lastName: 'Vader',
-          key: 'Dark Side',
-          custom: {
-            groups: 'siths'
-          }
-        };
-
-        var user2 = {
-          firstName: 'Grogu',
-          lastName: 'Baby',
-          key: 'Baby Yoda',
-          custom: {
-            groups: 'jedis'
-          }
-        };
-
-        var div = document.createElement('div');
-        document.body.appendChild(div);
-
-        div.appendChild(document.createTextNode('Initializing...'));
-
-        var ldclient = LDClient.initialize('603b1f5b04ec6610a35ff085', user2);
-
-        function render() {
-          var shouldShow = ldclient.variation('lights-off', false);
-          const imageToDisplay = document.createElement('img');
-          div.replaceChild(imageToDisplay, div.firstChild);
-          imageToDisplay.src = shouldShow ? 'https://bgr.com/wp-content/uploads/2015/08/darth-vader.jpg?quality=70&strip=all' : 'https://cdn3.movieweb.com/i/article/mSv9XmO6EQbtijy72VJ4BMEzrbveks/1200:100/The-Mandalorian-Blue-Cookies-Recipe-Grogu-Baby-Yoda.jpg';
+      var user = {
+        "firstName": "Bob",
+        "lastName": "Loblaw",
+        "key": "bob@example.com",
+        "custom": {
+          "groups": "beta_testers"
         }
+      };
 
-        ldclient.on('ready', render);
-        ldclient.on('change', render);
-      </script>
-</body>
+      var user1 = {
+        "firstName": "Darth",
+        "lastName": "Vader",
+        "key": "sithboi@darkside.com",
+        "custom": {
+          "groups": "beta_testers"
+        }
+      };
+
+      var user2 = {
+        "firstName": "Obi-wan",
+        "lastName": "Kenobi",
+        "key": "forceboi@lightside.com",
+        "custom": {
+          "groups": "beta_testers"
+        }
+      };
+
+
+      var div = document.createElement("div");
+      document.body.appendChild(div);
+
+      div.appendChild(document.createTextNode('Initializing...'));
+
+      //Change the user to see LD feature flag interaction
+      var ldclient = LDClient.initialize('603b1f5b04ec6610a35ff085', user2);
+
+      function render() {
+        var shouldShow = ldclient.variation('bobs-flag', false);
+        let image = document.createElement("img");
+        div.replaceChild(image, div.firstChild);
+        image.src = shouldShow ? "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/B0BDA09845AA575291C38D21E462571A6E07AC34899505FA6F6D615137B15EDF/scale?aspectRatio=1.78&format=jpeg" : "https://www.thegreenhead.com/imgs/star-wars-baby-yoda-child-life-size-replica-figure-1.jpg";
+      }
+
+      ldclient.on('ready', render);
+      ldclient.on('change', render);
+    </script>
+  </body>
 </html>
